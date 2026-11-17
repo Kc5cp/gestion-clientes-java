@@ -1,0 +1,163 @@
+<%@ page pageEncoding="UTF-8" %>
+<%-- Formulario compartido por frmRegistrar.jsp y frmModificar.jsp.
+     La pagina que lo incluye define:
+       accionFormulario -> agregar | actualizar
+       textoBoton       -> texto del boton principal
+
+     Nota para las pruebas: el formulario lleva "novalidate" para que TODA la
+     validacion la haga el servidor y los mensajes sean iguales en cualquier
+     navegador (asi Selenium puede verificarlos por id). Si se quita
+     "novalidate", el navegador vuelve a validar con required / pattern.       --%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
+<c:if test="${not empty mensajeError}">
+    <div id="alertError" class="alert alert-danger" role="alert">
+        <span id="alertErrorTexto"><c:out value="${mensajeError}"/></span>
+    </div>
+</c:if>
+
+<div class="row g-4">
+
+    <%-- ============ Formulario ============ --%>
+    <div class="col-lg-8">
+        <form id="formCliente" action="${pageContext.request.contextPath}/ClienteServlet" method="post"
+              class="tarjeta" novalidate>
+            <input type="hidden" id="hidAccion" name="accion" value="${accionFormulario}">
+            <input type="hidden" id="hidIdCliente" name="id" value="${cliente.idCliente}">
+
+            <section aria-labelledby="tituloSeccionIdentidad">
+                <h3 id="tituloSeccionIdentidad" class="seccion-titulo">
+                    <span class="paso" aria-hidden="true">1</span> Datos de identificación
+                </h3>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label for="txtDni" class="form-label">DNI <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <input type="text" id="txtDni" name="dni" inputmode="numeric" autocomplete="off"
+                               class="form-control ${not empty errores.dni ? 'is-invalid' : ''}"
+                               value="<c:out value='${cliente.documentoDni}'/>"
+                               maxlength="8" pattern="\d{8}" placeholder="Ej.: 73388307" required
+                               aria-describedby="ayudaDni">
+                        <div id="ayudaDni" class="form-text">
+                            8 dígitos numéricos (<span id="contadorDni">0</span>/8).
+                        </div>
+                        <c:if test="${not empty errores.dni}">
+                            <div id="errorDni" class="invalid-feedback"><c:out value="${errores.dni}"/></div>
+                        </c:if>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="txtApellidos" class="form-label">Apellidos <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <input type="text" id="txtApellidos" name="apellidos" autocomplete="off"
+                               class="form-control ${not empty errores.apellidos ? 'is-invalid' : ''}"
+                               value="<c:out value='${cliente.apellidos}'/>" maxlength="100"
+                               placeholder="Ej.: Cespedes Panduro" required>
+                        <c:if test="${not empty errores.apellidos}">
+                            <div id="errorApellidos" class="invalid-feedback"><c:out value="${errores.apellidos}"/></div>
+                        </c:if>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="txtNombres" class="form-label">Nombres <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <input type="text" id="txtNombres" name="nombres" autocomplete="off"
+                               class="form-control ${not empty errores.nombres ? 'is-invalid' : ''}"
+                               value="<c:out value='${cliente.nombres}'/>" maxlength="100"
+                               placeholder="Ej.: Katty Carolina" required>
+                        <c:if test="${not empty errores.nombres}">
+                            <div id="errorNombres" class="invalid-feedback"><c:out value="${errores.nombres}"/></div>
+                        </c:if>
+                    </div>
+                </div>
+            </section>
+
+            <section aria-labelledby="tituloSeccionContacto" class="mt-4">
+                <h3 id="tituloSeccionContacto" class="seccion-titulo">
+                    <span class="paso" aria-hidden="true">2</span> Datos de contacto
+                </h3>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="txtCorreo" class="form-label">Correo electrónico <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <input type="email" id="txtCorreo" name="correo" autocomplete="off"
+                               class="form-control ${not empty errores.correo ? 'is-invalid' : ''}"
+                               value="<c:out value='${cliente.correoElectronico}'/>" maxlength="100"
+                               placeholder="nombre@dominio.com" required aria-describedby="ayudaCorreo">
+                        <div id="ayudaCorreo" class="form-text">Formato: nombre@dominio.com</div>
+                        <c:if test="${not empty errores.correo}">
+                            <div id="errorCorreo" class="invalid-feedback"><c:out value="${errores.correo}"/></div>
+                        </c:if>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="txtCelular" class="form-label">Celular <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <input type="text" id="txtCelular" name="celular" inputmode="numeric" autocomplete="off"
+                               class="form-control ${not empty errores.celular ? 'is-invalid' : ''}"
+                               value="<c:out value='${cliente.numeroCelular}'/>"
+                               maxlength="9" pattern="\d{9}" placeholder="Ej.: 947041172" required
+                               aria-describedby="ayudaCelular">
+                        <div id="ayudaCelular" class="form-text">
+                            9 dígitos numéricos (<span id="contadorCelular">0</span>/9).
+                        </div>
+                        <c:if test="${not empty errores.celular}">
+                            <div id="errorCelular" class="invalid-feedback"><c:out value="${errores.celular}"/></div>
+                        </c:if>
+                    </div>
+                    <div class="col-12">
+                        <label for="txtDireccion" class="form-label">Dirección <span class="obligatorio" aria-hidden="true">*</span></label>
+                        <input type="text" id="txtDireccion" name="direccion" autocomplete="off"
+                               class="form-control ${not empty errores.direccion ? 'is-invalid' : ''}"
+                               value="<c:out value='${cliente.direccionDomicilio}'/>" maxlength="200"
+                               placeholder="Ej.: Prolg. Almirante Grau 120, Moyobamba" required>
+                        <c:if test="${not empty errores.direccion}">
+                            <div id="errorDireccion" class="invalid-feedback"><c:out value="${errores.direccion}"/></div>
+                        </c:if>
+                    </div>
+                </div>
+            </section>
+
+            <div class="acciones-form">
+                <button type="submit" id="btnGuardar" class="btn btn-success"><c:out value="${textoBoton}"/></button>
+                <a id="btnCancelar" class="btn btn-outline-secondary"
+                   href="${pageContext.request.contextPath}/ClienteServlet">Cancelar</a>
+                <span class="nota-obligatorio"><span class="obligatorio" aria-hidden="true">*</span> Campo obligatorio</span>
+            </div>
+        </form>
+    </div>
+
+    <%-- ============ Reglas del registro (ayuda) ============ --%>
+    <div class="col-lg-4">
+        <aside id="ayudaRegistro" class="tarjeta tarjeta-ayuda" aria-labelledby="tituloAyuda">
+            <h3 id="tituloAyuda" class="ayuda-titulo">
+                <svg class="icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>
+                </svg>
+                Antes de guardar
+            </h3>
+            <ul class="ayuda-lista">
+                <li>Todos los campos son obligatorios.</li>
+                <li>El <strong>DNI</strong> tiene 8 dígitos y no puede estar registrado en otro cliente.</li>
+                <li>El <strong>celular</strong> tiene 9 dígitos.</li>
+                <li>Apellidos y nombres solo llevan letras.</li>
+                <li>El <strong>correo</strong> debe tener el formato nombre@dominio.com.</li>
+            </ul>
+            <c:if test="${accionFormulario == 'actualizar'}">
+                <p class="ayuda-nota">Estás modificando al cliente con ID <strong id="idClienteEditado">${cliente.idCliente}</strong>.</p>
+            </c:if>
+        </aside>
+    </div>
+</div>
+
+<script>
+    // Contadores de dígitos (solo informativos: la validación real la hace el servidor)
+    (function () {
+        function enlazar(idCampo, idContador) {
+            var campo = document.getElementById(idCampo);
+            var contador = document.getElementById(idContador);
+            function actualizar() { contador.textContent = campo.value.length; }
+            campo.addEventListener('input', actualizar);
+            actualizar();
+        }
+        enlazar('txtDni', 'contadorDni');
+        enlazar('txtCelular', 'contadorCelular');
+
+        // Si el servidor devolvió errores, el cursor va al primer campo marcado
+        var primero = document.querySelector('#formCliente .is-invalid');
+        if (primero) { primero.focus(); }
+    })();
+</script>

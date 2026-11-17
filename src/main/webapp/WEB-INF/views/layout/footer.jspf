@@ -1,0 +1,11 @@
+<%@ page pageEncoding="UTF-8" %>
+<%-- Plantilla comun: cierre de pagina + JavaScript de Bootstrap (necesario para el modal) --%>
+</main>
+
+<footer class="pie container">
+    Sistema de Gestión de Clientes &middot; Ingeniería de Software &middot; UCV Moyobamba
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

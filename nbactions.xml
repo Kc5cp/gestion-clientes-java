@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>run</actionName>
+            <packagings>
+                <packaging>war</packaging>
+                <packaging>ear</packaging>
+                <packaging>ejb</packaging>
+            </packagings>
+            <goals>
+                <goal>package</goal>
+            </goals>
+            <properties>
+                <netbeans.deploy>true</netbeans.deploy>
+                <netbeans.deploy.clientUrlPart>ClienteServlet</netbeans.deploy.clientUrlPart>
+            </properties>
+        </action>
+        <action>
+            <actionName>debug</actionName>
+            <packagings>
+                <packaging>war</packaging>
+                <packaging>ear</packaging>
+                <packaging>ejb</packaging>
+            </packagings>
+            <goals>
+                <goal>package</goal>
+            </goals>
+            <properties>
+                <netbeans.deploy.debugmode>true</netbeans.deploy.debugmode>
+                <netbeans.deploy>true</netbeans.deploy>
+                <netbeans.deploy.clientUrlPart>ClienteServlet</netbeans.deploy.clientUrlPart>
+            </properties>
+        </action>
+        <action>
+            <actionName>profile</actionName>
+            <packagings>
+                <packaging>ejb</packaging>
+                <packaging>ear</packaging>
+                <packaging>war</packaging>
+            </packagings>
+            <goals>
+                <goal>package</goal>
+            </goals>
+            <properties>
+                <netbeans.deploy>true</netbeans.deploy>
+                <netbeans.deploy.profilemode>true</netbeans.deploy.profilemode>
+                <netbeans.deploy.clientUrlPart>ClienteServlet</netbeans.deploy.clientUrlPart>
+            </properties>
+        </action>
+        <!-- Boton "Test" (clic derecho en el proyecto > Test, o Alt+F6):
+             ejecuta las pruebas de Selenium de la carpeta src/test/java/pruebas.
+             La aplicacion debe estar en ejecucion (Run) antes de usarlo. -->
+        <action>
+            <actionName>test</actionName>
+            <goals>
+                <goal>test</goal>
+            </goals>
+            <properties>
+                <skipTests>false</skipTests>
+            </properties>
+        </action>
+    </actions>
