@@ -12,9 +12,5 @@ Sistema web para registrar, buscar, modificar y eliminar clientes. Hecho con Jak
 21 pruebas (15 de Clientes y 6 de navegación) en `src/test/java/pruebas`, con Selenium 4.44.0 y JUnit 5.
 Con el sistema encendido: clic derecho en el proyecto > Test.
 
-## Documentación
-- Informe: `docs/informe`
-- Diagramas de actividades: `docs/diagramas`
-- Capturas de las pruebas: `docs/evidencias`
 
 Autora: Katty 
